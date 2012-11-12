@@ -37,7 +37,7 @@ class ContactPage extends Page
     
     public function getCMSFields() {        
         $fields = parent::getCMSFields();
-        $fields->addFieldsToTab('Root.Main',array(new TextField('EmailTo','Email to'),),'Content');
+        $fields->addFieldToTab('Root.Content.Main',new TextField('EmailTo','Email to'),'Content');
         return $fields;
     }
     

@@ -38,18 +38,18 @@ class ContactPage_Controller extends Page_Controller
         Requirements::css("contactpage/css/jquery-ui-1.9.1.custom.min.css");        
     }
     
-    public function renderContactForm() {	
-        $fields = new FieldList(
-                    TextField::create("name",'')->setMaxLength(50),
-                    EmailField::create("email")->setMaxLength(50),
-                    TextareaField::create("message"),
-                    LiteralField::create('captcha_img','<img id="captcha" src="contactpage/code/captcha/securimage/securimage_show.php" alt="CAPTCHA image" />'),
-                    TextField::create("captcha_code",'')->setMaxLength(6)
-                );
+    public function renderContactForm() {
+        $fields = new FieldSet(
+            new TextField("name","Name"),
+            new EmailField("email","Email"),
+            new TextareaField("message","Message",10),
+            new LiteralField('captcha_img','<img id="captcha" src="contactpage/code/captcha/securimage/securimage_show.php" alt="CAPTCHA image" />'),
+            new TextField("captcha_code",'')
+        );        
         
-        $action = new FieldList(
-                    FormAction::create('sendContactForm', _t(ContactPage.SubmitButton,'Submit'))
-                );
+        $action = new FieldSet(
+            new FormAction('sendContactForm', _t(ContactPage.SubmitButton,'Submit'))
+        );
         
         $requiredFields = new RequiredFields(array('name','email','message','captcha_code'));
         $contactForm = new Form($this,'sendContactForm', $fields, $action, $requiredFields);
@@ -59,26 +59,26 @@ class ContactPage_Controller extends Page_Controller
     }
 	
     public function sendContactForm($data) {
-            if(Director::is_ajax() || isset($_GET["ajaxDebug"])) { 
-                $this->isAjax = true; 
-            } else { 
-                $this->isAjax = false; 
-            } 
-            require_once Director::baseFolder () . '/contactpage/code/captcha/securimage/securimage.php';		
-            $securimage = new Securimage();
-            if ($securimage->check($data['captcha_code']) == false) {
-                return -1;
-            }
+        if(Director::is_ajax() || isset($_GET["ajaxDebug"])) { 
+            $this->isAjax = true; 
+        } else { 
+            $this->isAjax = false; 
+        } 
+        require_once Director::baseFolder () . '/contactpage/code/captcha/securimage/securimage.php';		
+        $securimage = new Securimage();
+        if ($securimage->check($data['captcha_code']) == false) {
+            return -1;
+        }
 
-            $to = $this->EmailTo;
-            $subject = $this->Title . ' - ' . $data['name'];
-            $email = new Email($contact->email, $to, $subject, $data['message'] );
-            $sent = $email->sendPlain();		
-            if ($sent) {                  
-                return 1;
-            } else {
-                return 0;
-            }
+        $to = $this->EmailTo;
+        $subject = $this->Title . ' - ' . $data['name'];
+        $email = new Email($contact->email, $to, $subject, $data['message'] );
+        $sent = $email->sendPlain();		
+        if ($sent) {                  
+            return 1;
+        } else {
+            return 0;
+        }
     }
        
 }
