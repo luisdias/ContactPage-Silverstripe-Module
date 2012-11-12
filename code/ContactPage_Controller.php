@@ -72,7 +72,7 @@ class ContactPage_Controller extends Page_Controller
 
         $to = $this->EmailTo;
         $subject = $this->Title . ' - ' . $data['name'];
-        $email = new Email($contact->email, $to, $subject, $data['message'] );
+        $email = new Email($data['email'], $to, $subject, $data['message'] );
         $sent = $email->sendPlain();		
         if ($sent) {                  
             return 1;
