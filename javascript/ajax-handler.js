@@ -20,65 +20,63 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-jQuery(document).ready(function() {    
-    jQuery("#Form_sendContactForm").validate({                                 
-        rules: {
-            name: {
-                required: true
-            },            
-            email: {
-                required: true,
-                email: true
-            },
-            message: {
-                required: true,
-                minlength: 20
-            },
-            captcha_code: {
-                required: true
-            }            
+$("#Form_sendContactForm").validate({                                 
+    rules: {
+        name: {
+            required: true
+        },            
+        email: {
+            required: true,
+            email: true
         },
-        messages: {
-            name:  nameValidationMessage,
-            captcha_code: captchaValidationMessage,
-            email:  emailValidationMessage,
-            message: textValidationMessage
+        message: {
+            required: true,
+            minlength: 20
         },
-        submitHandler: function() {            
-            $.ajax({
-            type: "POST",
-            url: window.location.pathname + "/sendContactForm",
-            dataType: "text",
-            data: "name=" + $('[name="name"]').val() + '&' +
-                "email=" + $('[name="email"]').val() + '&' +
-                "message=" + $('[name="message"]').val() + '&' +
-                "captcha_code=" + $('[name="captcha_code"]').val(),
-            success: function(data, textStatus, jqXHR){
-                // ContactPage_Controller->sendContactForm
-                if (data == 0) { // mail error
-                    $( "#dialog-modal" ).html(formSubmitErrorMessage);                      
-                } else if ( data == -1 ){ // captcha error
-                    $( "#dialog-modal" ).html(captchaValidationMessage);
-                } else if ( data == 1 ) { // ok
-                    $( "#dialog-modal" ).html(formSubmitSuccessMessage);
-                }
-                $(function() {
-                    $( "#dialog-modal" ).dialog({
-                        height: 140,
-                        modal: true
-                    });
-                });                                
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                $( "#dialog-modal" ).html(textStatus);
-                $(function() {
-                    $( "#dialog-modal" ).dialog({
-                        height: 140,
-                        modal: true
-                    });
-                });                  
+        captcha_code: {
+            required: true
+        }            
+    },
+    messages: {
+        name:  nameValidationMessage,
+        captcha_code: captchaValidationMessage,
+        email:  emailValidationMessage,
+        message: textValidationMessage
+    },
+    submitHandler: function() {            
+        $.ajax({
+        type: "POST",
+        url: window.location.pathname + "/sendContactForm",
+        dataType: "text",
+        data: "name=" + $('[name="name"]').val() + '&' +
+            "email=" + $('[name="email"]').val() + '&' +
+            "message=" + $('[name="message"]').val() + '&' +
+            "captcha_code=" + $('[name="captcha_code"]').val(),
+        success: function(data, textStatus, jqXHR){
+            // ContactPage_Controller->sendContactForm
+            if (data == 0) { // mail error
+                $( "#dialog-modal" ).html(formSubmitErrorMessage);                      
+            } else if ( data == -1 ){ // captcha error
+                $( "#dialog-modal" ).html(captchaValidationMessage);
+            } else if ( data == 1 ) { // ok
+                $( "#dialog-modal" ).html(formSubmitSuccessMessage);
             }
-            });                
-        }                    
-    });
+            $(function() {
+                $( "#dialog-modal" ).dialog({
+                    height: 140,
+                    modal: true
+                });
+            });                                
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            $( "#dialog-modal" ).html(textStatus);
+            $(function() {
+                $( "#dialog-modal" ).dialog({
+                    height: 140,
+                    modal: true
+                });
+            });                  
+        }
+        });                
+    }                    
 });
