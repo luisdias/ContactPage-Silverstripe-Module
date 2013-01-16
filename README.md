@@ -1,5 +1,7 @@
 ContactPage-Silverstripe-Module
 ===============================
+**ChangeLog for version 0.2**  
+* update to Silverstripe 3.x  
 
 # Author contact  
 Luis E. S. Dias  
