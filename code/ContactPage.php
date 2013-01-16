@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2012 Luis E. S. Dias - www.smartbyte.com.br
+Copyright (c) 2013 Luis E. S. Dias - smartbyte.systems@gmail.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -37,7 +37,7 @@ class ContactPage extends Page
     
     public function getCMSFields() {        
         $fields = parent::getCMSFields();
-        $fields->addFieldToTab('Root.Content.Main',new TextField('EmailTo','Email to'),'Content');
+        $fields->addFieldsToTab('Root.Main',array(new TextField('EmailTo','Email to'),),'Content');
         return $fields;
     }
     
