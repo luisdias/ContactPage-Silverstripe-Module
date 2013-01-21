@@ -20,45 +20,45 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<form $FormAttributes>
-   <fieldset>
-       <p>
-       <div class="contact-form-label"><label for="Form_sendContactForm_name">Name</label></div>
-       <div class="contact-form-field">$dataFieldByName(name)</div>
-       <div class="contact-form-error"><label for="Form_sendContactForm_name" generated="false" class="error"></label></div>
-       </p>       
-       
-       <p>
-       <div class="contact-form-label"><label for="Form_sendContactForm_email">Email</label></div>
-       <div class="contact-form-field">$dataFieldByName(email)</div>
-       <div class="contact-form-error"><label for="Form_sendContactForm_email" generated="false" class="error"></label></div>
-       </p>
+<div id="ContactForm">
+    <form $FormAttributes>
+    <fieldset>
+        <label for="Form_sendContactForm_name">Name</label>
+        $dataFieldByName(name)
+        <label for="Form_sendContactForm_name" generated="false" class="error"></label>
 
-       <p>
-       <div class="contact-form-label"><label for="Form_sendContactForm_message">Message</label></div>
-       <div class="contact-form-field">$dataFieldByName(message)</div>
-       <div class="contact-form-error"><label for="Form_sendContactForm_message" generated="false" class="error"></label></div>
-       </p>
-       
-       <p>       
-       <div class="contact-form-label"><label for="Form_sendContactForm_captcha_code">Verify code</label></div>
-       <div class="contact-form-field">$dataFieldByName(captcha_code)</div>
-       <div class="contact-form-error"><label for="Form_sendContactForm_captcha_code" generated="false" class="error"></label></div>
-       </p>
+        <label for="Form_sendContactForm_email">Email</label>
+        $dataFieldByName(email)
+        <label for="Form_sendContactForm_email" generated="false" class="error"></label>
 
-       <p>$Fields.FieldByName(captcha_img)</p>
-       &nbsp;
-       <a href="#" onclick="document.getElementById('captcha').src = '{$BaseHref}contactpage/code/captcha/securimage/securimage_show.php?sid=' + Math.random(); return false">
-           <img src="{$BaseHref}contactpage/images/refresh.png" height="32" width="32" />
-       </a>
-      $dataFieldByName(SecurityID)
-   </fieldset>
-   <br/>
-   <% if Actions %>
-      <div class="Actions">
-         <% control Actions %>$Field<% end_control %>
-      </div>
-   <% end_if %>
-</form>
-<br/>
-<div id="dialog-modal" title="Alert"></div>
+        <label for="Form_sendContactForm_message">Message</label>
+        $dataFieldByName(message)
+        <label for="Form_sendContactForm_message" generated="false" class="error"></label>
+
+        <label for="Form_sendContactForm_captcha_code">Code</label>
+        $dataFieldByName(captcha_code)
+        <label for="Form_sendContactForm_captcha_code" generated="false" class="error"></label>
+        
+        $Fields.FieldByName(captcha_img)
+        <a href="#" onclick="document.getElementById('captcha').src = '{$BaseHref}contactpage/code/captcha/securimage/securimage_show.php?sid=' + Math.random(); return false">
+        <img src="{$BaseHref}contactpage/images/refresh.png" height="32" width="32" />
+        </a>
+        
+        $dataFieldByName(SecurityID)
+    </fieldset>
+    <br/>
+    <% if Actions %>
+       <div class="Actions">
+          <% control Actions %>$Field<% end_control %>
+       </div>
+    <% end_if %>
+    </form>
+</div>    
+<div class="jqmAlert" id="ex3b">
+    <div id="ex3b" class="jqmAlertWindow">
+        <div class="jqmAlertTitle clearfix">
+            <h1>Mensagem</h1><a href="#" class="jqmClose"><em>Close</em></a>
+        </div>  
+        <div class="jqmAlertContent"></div>
+    </div>
+</div>
