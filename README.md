@@ -1,5 +1,9 @@
 ContactPage-Silverstripe-Module
 ===============================
+**ChangeLog for version 0.3**  
+* enhancement: update to jQuery plugin jqModal
+* minor: style update
+
 **ChangeLog for version 0.2**  
 * update to Silverstripe 3.x  
 
@@ -15,7 +19,6 @@ https://github.com/luisdias/ContactPage-Silverstripe-Module.git
 
 # Notes  
 jQuery library version 1.8.2  
-jQuery-UI version 1.9.1 (Theme: UI darkness)  
 jQuery Validate 1.10.0  
 Secureimage PHP Captcha version 3.0.1  
 
