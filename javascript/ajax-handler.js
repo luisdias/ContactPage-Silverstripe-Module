@@ -20,6 +20,19 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+$().ready(function() {
+  
+    $('#ex3b').jqm({
+        target: 'div.jqmAlertContent'
+    });
+
+    if($.browser.msie) {
+        $('div.jqmAlert .jqmClose')
+        .hover(
+            function(){ $(this).addClass('jqmCloseHover'); }, 
+            function(){ $(this).removeClass('jqmCloseHover'); });
+    }
+});
 $("#Form_sendContactForm").validate({                                 
     rules: {
         name: {
@@ -55,27 +68,17 @@ $("#Form_sendContactForm").validate({
         success: function(data, textStatus, jqXHR){
             // ContactPage_Controller->sendContactForm
             if (data == 0) { // mail error
-                $( "#dialog-modal" ).html(formSubmitErrorMessage);                      
+                $( ".jqmAlertContent" ).html(formSubmitErrorMessage);                                      
             } else if ( data == -1 ){ // captcha error
-                $( "#dialog-modal" ).html(captchaValidationMessage);
+                $( ".jqmAlertContent" ).html(captchaValidationMessage);
             } else if ( data == 1 ) { // ok
-                $( "#dialog-modal" ).html(formSubmitSuccessMessage);
+                $( ".jqmAlertContent" ).html(formSubmitSuccessMessage);
             }
-            $(function() {
-                $( "#dialog-modal" ).dialog({
-                    height: 140,
-                    modal: true
-                });
-            });                                
+            $('#ex3b').jqmShow();                               
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            $( "#dialog-modal" ).html(textStatus);
-            $(function() {
-                $( "#dialog-modal" ).dialog({
-                    height: 140,
-                    modal: true
-                });
-            });                  
+            $( ".jqmAlertContent" ).html(textStatus);            
+            $('#ex3b').jqmShow();           
         }
         });                
     }                    
