@@ -27,15 +27,14 @@ class ContactPage_Controller extends Page_Controller
         parent::init();
         Validator::set_javascript_validation_handler('none');
         
-        Requirements::javascript("contactpage/javascript/jquery-1.8.2.min.js");        
-        Requirements::javascript("contactpage/javascript/jquery.validate.min.js");
-        Requirements::javascript("contactpage/javascript/jquery-ui-1.9.1.custom.min.js");
-        
+        Requirements::javascript("contactpage/javascript/jquery-1.8.2.min.js");
+        Requirements::javascript("contactpage/javascript/jqModal.js");        
+        Requirements::javascript("contactpage/javascript/jquery.validate.min.js");        
         Requirements::javascript("contactpage/javascript/messages.js");
         Requirements::javascript("contactpage/javascript/ajax-handler.js");
         
         Requirements::css("contactpage/css/ContactPage.css");
-        Requirements::css("contactpage/css/jquery-ui-1.9.1.custom.min.css");        
+        Requirements::css("contactpage/css/jqModal.css");
     }
     
     public function renderContactForm() {	
