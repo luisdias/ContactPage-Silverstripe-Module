@@ -24,19 +24,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <form $FormAttributes>
     <fieldset>
         <label for="Form_sendContactForm_name">Name</label>
-        $dataFieldByName(name)
+        $Fields.FieldByName(name)
         <label for="Form_sendContactForm_name" generated="false" class="error"></label>
 
         <label for="Form_sendContactForm_email">Email</label>
-        $dataFieldByName(email)
+        $Fields.FieldByName(email)
         <label for="Form_sendContactForm_email" generated="false" class="error"></label>
 
         <label for="Form_sendContactForm_message">Message</label>
-        $dataFieldByName(message)
+        $Fields.FieldByName(message)
         <label for="Form_sendContactForm_message" generated="false" class="error"></label>
 
         <label for="Form_sendContactForm_captcha_code">Code</label>
-        $dataFieldByName(captcha_code)
+        $Fields.FieldByName(captcha_code)
         <label for="Form_sendContactForm_captcha_code" generated="false" class="error"></label>
         
         $Fields.FieldByName(captcha_img)
@@ -44,7 +44,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <img src="{$BaseHref}contactpage/images/refresh.png" height="32" width="32" />
         </a>
         
-        $dataFieldByName(SecurityID)
+        $Fields.FieldByName(SecurityID)
     </fieldset>
     <br/>
     <% if Actions %>
