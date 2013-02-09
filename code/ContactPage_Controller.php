@@ -25,7 +25,6 @@ class ContactPage_Controller extends Page_Controller
 {
     public function init() {
         parent::init();
-        Validator::set_javascript_validation_handler('none');
         
         Requirements::javascript("https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js");
         Requirements::javascript("contactpage/javascript/jqModal.js");        
