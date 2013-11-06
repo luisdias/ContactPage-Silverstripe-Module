@@ -26,3 +26,4 @@ var nameValidationMessage = "Name is required";
 var emailValidationMessage = "Invalid email";
 var textValidationMessage = "Message is required";
 var captchaValidationMessage = "Captcha error, please try again";
+var unknowErrorMessage = "An unknow error has ocurred";
