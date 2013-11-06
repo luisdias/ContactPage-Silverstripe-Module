@@ -23,60 +23,58 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 class ContactPage_Controller extends Page_Controller 
 {
+    private static $allowed_actions = array(
+           'sendContactForm'
+       );
+    
     public function init() {
         parent::init();
-        
-        Requirements::javascript("https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js");
-        Requirements::javascript("contactpage/javascript/jqModal.js");        
-        Requirements::javascript("contactpage/javascript/jquery.validate.min.js");        
+        Requirements::javascript("contactpage/javascript/jquery.simplemodal-1.4.4.js");
+        Requirements::javascript("contactpage/javascript/jquery.validate.min.js");
         Requirements::javascript("contactpage/javascript/messages.js");
         Requirements::javascript("contactpage/javascript/ajax-handler.js");
         
         Requirements::css("contactpage/css/ContactPage.css");
-        Requirements::css("contactpage/css/jqModal.css");
+        Requirements::css("contactpage/css/basic-jquery-simplemodal.css");
     }
     
     public function renderContactForm() {	
         $fields = new FieldList(
-            TextField::create("name",'')->setMaxLength(50),
-            EmailField::create("email")->setMaxLength(50),
-            TextareaField::create("message"),
-            LiteralField::create('captcha_img','<img id="captcha" src="contactpage/code/captcha/securimage/securimage_show.php" alt="CAPTCHA image" />'),
-            TextField::create("captcha_code",'')->setMaxLength(6)
+            TextField::create("contact_name")->setMaxLength(50),
+            EmailField::create("contact_email")->setMaxLength(50),
+            TextareaField::create("contact_message"),
+            TextField::create("captcha_code")->setMaxLength(6)
         );
         
         $action = new FieldList(
-            FormAction::create('sendContactForm', _t(ContactPage.SubmitButton,'Submit'))
+            FormAction::create('sendContactForm', 'Submit')
         );
         
-        $requiredFields = new RequiredFields(array('name','email','message','captcha_code'));
+        $requiredFields = new RequiredFields(array('contact_name','contact_email','contact_message','captcha_code'));
         $contactForm = new Form($this,'sendContactForm', $fields, $action, $requiredFields);
-        
         $contactForm->setTemplate('ContactForm');
         return $contactForm;
     }
 	
-    public function sendContactForm($data) {
-            if(Director::is_ajax() || isset($_GET["ajaxDebug"])) { 
-                $this->isAjax = true; 
-            } else { 
-                $this->isAjax = false; 
-            } 
-            require_once Director::baseFolder () . '/contactpage/code/captcha/securimage/securimage.php';		
+    public function sendContactForm($data, Form $form) {
+        if( Director::is_ajax() ) {             
+            require_once Director::baseFolder () . '/contactpage/code/captcha/securimage.php';            
             $securimage = new Securimage();
             if ($securimage->check($data['captcha_code']) == false) {
                 return -1;
             }
-
             $to = $this->EmailTo;
-            $subject = $this->Title . ' - ' . $data['name'];
-            $email = new Email($data['email'], $to, $subject, $data['message'] );
-            $sent = $email->sendPlain();		
+            $subject = $this->Title . ' - ' . $data['contact_name'];
+            $email = new Email($data['contact_email'], $to, $subject, $data['contact_message'] );
+            $sent = $email->sendPlain();
             if ($sent) {                  
                 return 1;
             } else {
                 return 0;
-            }
+            }            
+        } else { 
+            return 0;
+        } 
     }
        
 }
