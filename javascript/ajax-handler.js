@@ -21,65 +21,57 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 $().ready(function() {
-  
-    $('#ex3b').jqm({
-        target: 'div.jqmAlertContent'
-    });
-
-    if($.browser.msie) {
-        $('div.jqmAlert .jqmClose')
-        .hover(
-            function(){ $(this).addClass('jqmCloseHover'); }, 
-            function(){ $(this).removeClass('jqmCloseHover'); });
-    }
-});
-$("#Form_sendContactForm").validate({                                 
-    rules: {
-        name: {
-            required: true
-        },            
-        email: {
-            required: true,
-            email: true
+    $("#Form_sendContactForm").validate({                                 
+        rules: {
+            contact_name: {
+                required: true
+            },            
+            contact_email: {
+                required: true,
+                email: true
+            },
+            contact_message: {
+                required: true,
+                minlength: 20
+            },
+            captcha_code: {
+                required: true
+            }            
         },
-        message: {
-            required: true,
-            minlength: 20
+        messages: {
+            contact_name:  nameValidationMessage,
+            captcha_code: captchaValidationMessage,
+            contact_email:  emailValidationMessage,
+            contact_message: textValidationMessage
         },
-        captcha_code: {
-            required: true
-        }            
-    },
-    messages: {
-        name:  nameValidationMessage,
-        captcha_code: captchaValidationMessage,
-        email:  emailValidationMessage,
-        message: textValidationMessage
-    },
-    submitHandler: function() {            
-        $.ajax({
-        type: "POST",
-        url: window.location.pathname + "/sendContactForm",
-        dataType: "text",
-        data: "name=" + $('[name="name"]').val() + '&' +
-            "email=" + $('[name="email"]').val() + '&' +
-            "message=" + $('[name="message"]').val() + '&' +
-            "captcha_code=" + $('[name="captcha_code"]').val(),
-        success: function(data, textStatus, jqXHR){
-            // ContactPage_Controller->sendContactForm
-            if (data == 0) { // mail error
-                $( ".jqmAlertContent" ).html(formSubmitErrorMessage);                                      
-            } else if ( data == -1 ){ // captcha error
-                $( ".jqmAlertContent" ).html(captchaValidationMessage);
-            } else if ( data == 1 ) { // ok
-                $( ".jqmAlertContent" ).html(formSubmitSuccessMessage);
+        submitHandler: function() {
+            $.ajax({
+            type: "POST",
+            url: window.location.href + "sendContactForm",
+            dataType: "text",
+            data: "contact_name=" + $('[name="contact_name"]').val() + '&' +
+                "contact_email=" + $('[name="contact_email"]').val() + '&' +
+                "contact_message=" + $('[name="contact_message"]').val() + '&' +
+                "captcha_code=" + $('[name="captcha_code"]').val(),
+            success: function(data, textStatus, jqXHR){
+                // ContactPage_Controller->sendContactForm
+                if (data == 0) { // mail error
+                    $("#basic-modal-content" ).html(formSubmitErrorMessage);
+                } else if ( data == -1 ){ // captcha error
+                    $("#basic-modal-content" ).html(captchaValidationMessage);
+                } else if ( data == 1 ) { // ok
+                    $("#basic-modal-content" ).html(formSubmitSuccessMessage);
+                    $('#Form_sendContactForm_action_sendContactForm').attr('disabled', 'disabled');
+                } else {
+                    $("#basic-modal-content" ).html(unknowErrorMessage);
+                }
+                $("#basic-modal-content").modal();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                $("#basic-modal-content" ).html(textStatus);            
+                $("#basic-modal-content").modal();
             }
-            $('#ex3b').jqmShow();                               
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            $( ".jqmAlertContent" ).html(textStatus);            
-            $('#ex3b').jqmShow();           
-        }
-        });                
-    }                    
+            });                
+        }                    
+    });
 });
